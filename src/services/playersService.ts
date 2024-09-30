@@ -1,4 +1,4 @@
-import { getFileData } from "../config/DAL";
+import { getFileData, saveFileData } from "../config/DAL";
 import SearchPlayerDTO from "../types/DTO's/searchPlayerDTO";
 import { EnumPosition } from "../types/Enums/EnumsPosition";
 import Player from "../types/models/Player";
@@ -16,18 +16,36 @@ export default class playerService {
         }
 
         const allPlayersData: Player[] | void = await getFileData(`players`)!
-        console.log(allPlayersData)
 
         if (allPlayersData) {
             const filterByPosition: Player[] = allPlayersData.filter(plr => plr.position === position)
-            const filterByThree:Player[]  = filterByPosition.filter(plr => plr.threePercent >= threePercent)
-            const filterByTwe:Player[]  = filterByThree.filter(plr => plr.twoPercent >= threePercent)
-            const finalFilter:Player[]  = filterByTwe.filter(plr => plr.points >= points)
+            const filterByThree: Player[] = filterByPosition.filter(plr => plr.threePercent >= threePercent)
+            const filterByTwe: Player[] = filterByThree.filter(plr => plr.twoPercent >= threePercent)
+            const finalFilter: Player[] = filterByTwe.filter(plr => plr.points >= points)
             return finalFilter
         }
         return []
     }
 
 
-    
+    public static async writeTeam(team: Player[]): Promise<void> {
+        let allTeams: Player[] | void = await getFileData(`teams`)
+        if (!allTeams) {
+            allTeams = []
+        }
+        let flag = true
+        for (let index = 0; index < team.length; index++) {
+            for (let j = 0; j < team.length; j++) {
+                if (team[index].position === team[j].position) {
+                    flag = false
+                }
+            }
+        }
+        if(!flag)
+        {
+            throw new Error(`position is not different`)
+        }
+        allTeams.push(...team)
+        await saveFileData(`teams`, allTeams)
+    }
 }

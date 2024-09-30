@@ -22,7 +22,6 @@ class playerService {
                 throw new Error(`position is invalid!`);
             }
             const allPlayersData = yield (0, DAL_1.getFileData)(`players`);
-            console.log(allPlayersData);
             if (allPlayersData) {
                 const filterByPosition = allPlayersData.filter(plr => plr.position === position);
                 const filterByThree = filterByPosition.filter(plr => plr.threePercent >= threePercent);
@@ -31,6 +30,27 @@ class playerService {
                 return finalFilter;
             }
             return [];
+        });
+    }
+    static writeTeam(team) {
+        return __awaiter(this, void 0, void 0, function* () {
+            let allTeams = yield (0, DAL_1.getFileData)(`teams`);
+            if (!allTeams) {
+                allTeams = [];
+            }
+            let flag = true;
+            for (let index = 0; index < team.length; index++) {
+                for (let j = 0; j < team.length; j++) {
+                    if (team[index].position === team[j].position) {
+                        flag = false;
+                    }
+                }
+            }
+            if (!flag) {
+                throw new Error(`position is not different`);
+            }
+            allTeams.push(...team);
+            yield (0, DAL_1.saveFileData)(`teams`, allTeams);
         });
     }
 }

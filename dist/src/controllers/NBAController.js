@@ -32,6 +32,23 @@ router.post(`/filter`, (req, res) => __awaiter(void 0, void 0, void 0, function*
         });
     }
 }));
-router.post(`/AddTeam`, () => { });
-router.get(`/GetAllTeam`, () => { });
+router.post(`/AddTeam`, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        yield playersService_1.default.writeTeam(req.body);
+        {
+            res.json({
+                Message: `team`,
+                players: req.body
+            });
+        }
+    }
+    catch (_a) {
+        res.status(400).json({
+            err: true,
+            message: `requst faild`,
+            data: null
+        });
+    }
+}));
+router.get(`/GetAllTeam`);
 exports.default = router;
