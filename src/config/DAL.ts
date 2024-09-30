@@ -2,10 +2,10 @@ import { json } from 'express'
 import fs from 'fs/promises'
 import Player from '../types/models/Player'
 
-export const getFileData = async (resource: string): Promise<Player[] | void> => {
+export const getFileData = async <T>(resource: string): Promise<T[] | void> => {
     try {
         const playersString: string = await fs.readFile(`./data/${resource}.json`, `utf-8`)
-        const parsedData: Player[] = JSON.parse(playersString)
+        const parsedData: T[] = JSON.parse(playersString)
         return parsedData
     } catch (error) {
         console.log(error)

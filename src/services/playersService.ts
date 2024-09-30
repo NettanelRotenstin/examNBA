@@ -2,6 +2,7 @@ import { getFileData, saveFileData } from "../config/DAL";
 import SearchPlayerDTO from "../types/DTO's/searchPlayerDTO";
 import { EnumPosition } from "../types/Enums/EnumsPosition";
 import Player from "../types/models/Player";
+import Team from "../types/models/Team";
 
 
 export default class playerService {
@@ -48,4 +49,12 @@ export default class playerService {
         allTeams.push(...team)
         await saveFileData(`teams`, allTeams)
     }
-}
+
+    public static async getAllTeams(): Promise<Team[] | unknown> {
+        let allTeams  = await getFileData(`teams`)
+        if(!allTeams)
+        {
+            allTeams = []
+        }
+        return allTeams
+}}

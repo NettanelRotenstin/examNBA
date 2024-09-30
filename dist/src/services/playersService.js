@@ -53,5 +53,14 @@ class playerService {
             yield (0, DAL_1.saveFileData)(`teams`, allTeams);
         });
     }
+    static getAllTeams() {
+        return __awaiter(this, void 0, void 0, function* () {
+            let allTeams = yield (0, DAL_1.getFileData)(`teams`);
+            if (!allTeams) {
+                allTeams = [];
+            }
+            return allTeams;
+        });
+    }
 }
 exports.default = playerService;
