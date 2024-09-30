@@ -35,18 +35,15 @@ export default class playerService {
             allTeams = []
         }
         let flag = true
-        for (let i = 0; i < team.team.length; i++) {
-            for (let j = 0; j < team.team.length; j++) {
-                if(team.team[i].position === team.team[j].position)
-                {
+        for (let i = 0; i < team.PlayersOfTeam.length; i++) {
+            for (let j = 0; j < team.PlayersOfTeam.length; j++) {
+                if (team.PlayersOfTeam[i].position === team.PlayersOfTeam[j].position) {
                     flag = false
                     break
                 }
             }
-
         }
-        if(!flag)
-        {
+        if (!flag) {
             throw new Error(`position is not uniq!`)
         }
         allTeams.push(team)

@@ -22,14 +22,14 @@ router.post(`/filter`, async (req: Request, res: Response): Promise<void> => {
     }
 })
 
-router.post(`/AddTeam`, async (req: Request<any,any,Team>, res: Response): Promise<void> => {
+router.post(`/AddTeam`, async (req: Request<any, any, Team>, res: Response): Promise<void> => {
     try {
-        const team = req.body       
+        const team = req.body
         await playerService.writeTeam(team)
         {
             res.json({
-                Message:`team`,
-               players:req.body
+                Message: `team`,
+                players: req.body
             })
         }
     } catch {
@@ -41,12 +41,12 @@ router.post(`/AddTeam`, async (req: Request<any,any,Team>, res: Response): Promi
     }
 })
 
-router.get(`/GetAllTeam`,async (req: Request, res: Response): Promise<void> => {
+router.get(`/GetAllTeam`, async (req: Request, res: Response): Promise<void> => {
     try {
-        const teams = await playerService.getAllTeams()
+        const teams: Team[] | unknown = await playerService.getAllTeams()
         {
             res.json({
-               teams
+                teams
             })
         }
     } catch {
@@ -56,6 +56,6 @@ router.get(`/GetAllTeam`,async (req: Request, res: Response): Promise<void> => {
             data: null
         })
     }
-} )
+})
 
 export default router
