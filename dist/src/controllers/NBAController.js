@@ -1,11 +1,37 @@
 "use strict";
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
+const playersService_1 = __importDefault(require("../services/playersService"));
 const router = express_1.default.Router();
-router.post(`/filter`, () => { });
+router.post(`/filter`, (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    try {
+        const players = yield playersService_1.default.filterPlayers(req.body);
+        if (players) {
+            res.json({
+                players
+            });
+        }
+    }
+    catch (_a) {
+        res.status(400).json({
+            err: true,
+            message: `requst faild`,
+            data: null
+        });
+    }
+}));
 router.post(`/AddTeam`, () => { });
 router.get(`/GetAllTeam`, () => { });
 exports.default = router;

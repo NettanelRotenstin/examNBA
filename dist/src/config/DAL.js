@@ -16,7 +16,7 @@ exports.saveFileData = exports.getFileData = void 0;
 const promises_1 = __importDefault(require("fs/promises"));
 const getFileData = (resource) => __awaiter(void 0, void 0, void 0, function* () {
     try {
-        const playersString = yield promises_1.default.readFile(`${__dirname}/../../data/${resource}.json`, `utf-8`);
+        const playersString = yield promises_1.default.readFile(`./data/${resource}.json`, `utf-8`);
         const parsedData = JSON.parse(playersString);
         return parsedData;
     }
