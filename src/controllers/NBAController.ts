@@ -1,6 +1,7 @@
 import express, { Router, Request, Response } from 'express'
 import Player from '../types/models/Player'
 import playerService from '../services/playersService'
+import Team from '../types/models/Team'
 
 const router: Router = express.Router()
 
@@ -21,9 +22,10 @@ router.post(`/filter`, async (req: Request, res: Response): Promise<void> => {
     }
 })
 
-router.post(`/AddTeam`, async (req: Request, res: Response): Promise<void> => {
+router.post(`/AddTeam`, async (req: Request<any,any,Team>, res: Response): Promise<void> => {
     try {
-        await playerService.writeTeam(req.body)
+        const team = req.body       
+        await playerService.writeTeam(team)
         {
             res.json({
                 Message:`team`,
@@ -39,6 +41,21 @@ router.post(`/AddTeam`, async (req: Request, res: Response): Promise<void> => {
     }
 })
 
-router.get(`/GetAllTeam`, )
+router.get(`/GetAllTeam`,async (req: Request, res: Response): Promise<void> => {
+    try {
+        const teams = await playerService.getAllTeams()
+        {
+            res.json({
+               teams
+            })
+        }
+    } catch {
+        res.status(400).json({
+            err: true,
+            message: `requst faild`,
+            data: null
+        })
+    }
+} )
 
 export default router

@@ -29,32 +29,35 @@ export default class playerService {
     }
 
 
-    public static async writeTeam(team: Player[]): Promise<void> {
-        let allTeams: Player[] | void = await getFileData(`teams`)
+    public static async writeTeam(team: Team): Promise<void> {
+        let allTeams: Team[] | void = await getFileData(`teams`)
         if (!allTeams) {
             allTeams = []
         }
         let flag = true
-        for (let index = 0; index < team.length; index++) {
-            for (let j = 0; j < team.length; j++) {
-                if (team[index].position === team[j].position) {
+        for (let i = 0; i < team.team.length; i++) {
+            for (let j = 0; j < team.team.length; j++) {
+                if(team.team[i].position === team.team[j].position)
+                {
                     flag = false
+                    break
                 }
             }
+
         }
         if(!flag)
         {
-            throw new Error(`position is not different`)
+            throw new Error(`position is not uniq!`)
         }
-        allTeams.push(...team)
+        allTeams.push(team)
         await saveFileData(`teams`, allTeams)
     }
 
     public static async getAllTeams(): Promise<Team[] | unknown> {
-        let allTeams  = await getFileData(`teams`)
-        if(!allTeams)
-        {
+        let allTeams = await getFileData(`teams`)
+        if (!allTeams) {
             allTeams = []
         }
         return allTeams
-}}
+    }
+}
