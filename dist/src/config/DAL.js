@@ -28,13 +28,12 @@ exports.getFileData = getFileData;
 const saveFileData = (resource, data) => __awaiter(void 0, void 0, void 0, function* () {
     try {
         const stringifyData = JSON.stringify(data);
-        yield promises_1.default.writeFile(`${__dirname}/../../data/${resource}.json`, stringifyData, {
+        yield promises_1.default.writeFile(`./data/${resource}.json`, stringifyData, {
             encoding: `utf8`
         });
         return true;
     }
     catch (error) {
-        console.log(error);
         return false;
     }
 });

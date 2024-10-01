@@ -32,7 +32,7 @@ router.post(`/AddTeam`, async (req: Request<any, any, Team>, res: Response): Pro
                 players: req.body
             })
         }
-    } catch {
+    } catch(err) {
         res.status(400).json({
             err: true,
             message: `requst faild`,

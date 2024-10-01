@@ -43,7 +43,7 @@ router.post(`/AddTeam`, (req, res) => __awaiter(void 0, void 0, void 0, function
             });
         }
     }
-    catch (_a) {
+    catch (err) {
         res.status(400).json({
             err: true,
             message: `requst faild`,
