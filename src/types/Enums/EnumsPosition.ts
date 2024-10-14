@@ -1,4 +1,4 @@
- export enum EnumPosition{
+export enum EnumPosition {
     C,
     PF,
     PG,
